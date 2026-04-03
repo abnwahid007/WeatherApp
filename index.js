@@ -7,7 +7,6 @@ const searchForm = document.querySelector("[data-searchForm]");
 const loadingScreen = document.querySelector(".loading-container");
 const userInfoContainer = document.querySelector(".user-info-container");
 
-//initially vairables need????
 
 let oldTab = userTab;
 const API_KEY = "d1845658f92b31c64bd94f06f7188c9c";
@@ -21,37 +20,34 @@ function switchTab(newTab) {
         oldTab.classList.add("current-tab");
 
         if(!searchForm.classList.contains("active")) {
-            //kya search form wala container is invisible, if yes then make it visible
+
             userInfoContainer.classList.remove("active");
             grantAccessContainer.classList.remove("active");
             searchForm.classList.add("active");
         }
         else {
-            //main pehle search wale tab pr tha, ab your weather tab visible karna h 
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
-            //ab main your weather tab me aagya hu, toh weather bhi display karna poadega, so let's check local storage first
-            //for coordinates, if we haved saved them there.
             getfromSessionStorage();
         }
     }
 }
 
 userTab.addEventListener("click", () => {
-    //pass clicked tab as input paramter
+
     switchTab(userTab);
 });
 
 searchTab.addEventListener("click", () => {
-    //pass clicked tab as input paramter
+
     switchTab(searchTab);
 });
 
-//check if cordinates are already present in session storage
+
 function getfromSessionStorage() {
     const localCoordinates = sessionStorage.getItem("user-coordinates");
     if(!localCoordinates) {
-        //agar local coordinates nahi mile
+
         grantAccessContainer.classList.add("active");
     }
     else {
@@ -63,9 +59,9 @@ function getfromSessionStorage() {
 
 async function fetchUserWeatherInfo(coordinates) {
     const {lat, lon} = coordinates;
-    // make grantcontainer invisible
+
     grantAccessContainer.classList.remove("active");
-    //make loader visible
+
     loadingScreen.classList.add("active");
 
     //API CALL
@@ -81,14 +77,12 @@ async function fetchUserWeatherInfo(coordinates) {
     }
     catch(err) {
         loadingScreen.classList.remove("active");
-        //HW
-
     }
 
 }
 
 function renderWeatherInfo(weatherInfo) {
-    //fistly, we have to fethc the elements 
+    //fetch the elements 
 
     const cityName = document.querySelector("[data-cityName]");
     const countryIcon = document.querySelector("[data-countryIcon]");
@@ -119,7 +113,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
     else {
-        //HW - show an alert for no gelolocation support available
+        alert("Can't be able to find location");
     }
 }
 
@@ -165,6 +159,6 @@ async function fetchSearchWeatherInfo(city) {
         renderWeatherInfo(data);
     }
     catch(err) {
-        //hW
+        
     }
 }
